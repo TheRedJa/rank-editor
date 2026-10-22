@@ -1,0 +1,16 @@
+// Derived from CleanroomMC/CleanroomModTemplate, LGPL-3.0-only (see licenses/LGPL-3.0-and-GPL-3.0.txt).
+
+pluginManagement {
+    repositories {
+        maven {
+            url = 'https://maven.cleanroommc.com'
+        }
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id 'com.cleanroommc.cleanroomgradle.settings' version '0.22.0'
+}
+
+rootProject.name = 'rankeditor'

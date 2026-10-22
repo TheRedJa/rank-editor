@@ -1,0 +1,10 @@
+{
+	"open": {
+		"group": "ftblib:util",
+		"icon": "ftblib:icons/lock",
+		"x": 200,
+		"click": "command:/rankeditor",
+		"required_server_mods": ["rankeditor"],
+		"requires_op": true
+	}
+}

@@ -1,0 +1,79 @@
+// Build script derived from CleanroomMC/CleanroomModTemplate (https://github.com/CleanroomMC/CleanroomModTemplate),
+// Copyright (c) 2026 CleanroomMC contributors, LGPL-3.0-only (see licenses/LGPL-3.0-and-GPL-3.0.txt).
+
+plugins {
+    id 'java'
+    id 'com.cleanroommc.cleanroomgradle'
+    id 'com.cleanroommc.tokenenvoy' version '3.0.0'
+}
+
+group = root_package
+version = mod_version
+
+base {
+    archivesName = mod_id
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    implementation cleanroom.userdev(cleanroom_version)
+
+    // FTB mods are SRG-obfuscated release jars; deobf() remaps them for dev compile + run.
+    implementation deobf(files('libs/FTBLib-5.4.7.2.jar', 'libs/FTBUtilities-5.4.1.131.jar'))
+
+    testImplementation platform('org.junit:junit-bom:5.13.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging {
+        events 'failed', 'skipped'
+        exceptionFormat = 'full'
+    }
+}
+
+cleanroom {
+    runs {
+        client {
+            configure {
+                username = minecraft_username
+                jvmArgs extra_jvm_args.tokenize()
+            }
+        }
+        server {
+            configure {
+                jvmArgs extra_jvm_args.tokenize()
+            }
+        }
+    }
+}
+
+tokenEnvoy {
+    set 'MOD_VERSION', project.version
+    set 'MOD_AUTHORS', mod_authors.tokenize(',')*.trim().join('", "')
+    set file('tokens.properties')
+}
+
+// The MCP-named jar is only an input for reobfJar; keep it out of build/libs so only the
+// deployable SRG jar (rankeditor-<version>.jar) and the -sources jar live there.
+tasks.named('jar') {
+    destinationDirectory = layout.buildDirectory.dir('intermediate')
+    from('LICENSE.md')
+}
+
+// TODO: fundamental Foundation issue (carried over from CleanroomModTemplate)
+tasks.withType(JavaExec).configureEach {
+    systemProperty 'foundation.loadsall', 'true'
+}

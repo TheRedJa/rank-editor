@@ -1,0 +1,32 @@
+# Build output
+build/
+out/
+bin/
+.gradle/
+*.class
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Minecraft dev run dirs and logs
+run/
+runs/
+logs/
+crash-reports/
+hs_err_pid*
+*.log
+
+# Third-party dev dependencies (SRG release jars, not redistributed; see build.gradle)
+libs/*.jar
+
+# OS noise
+.DS_Store
+
+# Local research notes; they quote decompiled FTB code, which is All Rights Reserved
+docs/ftb-api-notes.md
+docs/ftblib-gui-notes.md
