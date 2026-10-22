@@ -25,11 +25,26 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                url = 'https://cursemaven.com'
+            }
+        }
+        filter {
+            includeGroup 'curse.maven'
+        }
+    }
+}
+
 dependencies {
     implementation cleanroom.userdev(cleanroom_version)
 
-    // FTB mods are SRG-obfuscated release jars; deobf() remaps them for dev compile + run.
-    implementation deobf(files('libs/FTBLib-5.4.7.2.jar', 'libs/FTBUtilities-5.4.1.131.jar'))
+    // FTB Library 5.4.7.2 and FTB Utilities 5.4.1.131 from CurseForge (project-fileId); SRG release jars that
+    // deobf() remaps for compile and dev runs. Downloaded at build time, never redistributed.
+    implementation deobf('curse.maven:ftblib-237167:2985811')
+    implementation deobf('curse.maven:ftb-utilities-237102:3157548')
 
     testImplementation platform('org.junit:junit-bom:5.13.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'

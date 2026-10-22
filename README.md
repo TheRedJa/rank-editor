@@ -30,8 +30,7 @@ Keyboard shortcuts: `Ctrl+S` apply, `Ctrl+Z` undo, `Ctrl+F` search, `Esc` close.
 ## Building
 
 ```sh
-# FTB Library and FTB Utilities are not redistributed: copy FTBLib-5.4.7.2.jar and FTBUtilities-5.4.1.131.jar into libs/
-./gradlew build   # JDK 25; output: build/libs/rankeditor-<version>.jar
+./gradlew build   # JDK 25; FTB Library/Utilities are fetched from CurseMaven; output: build/libs/rankeditor-<version>.jar
 ```
 
 ## License

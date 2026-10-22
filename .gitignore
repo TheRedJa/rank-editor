@@ -21,8 +21,6 @@ crash-reports/
 hs_err_pid*
 *.log
 
-# Third-party dev dependencies (SRG release jars, not redistributed; see build.gradle)
-libs/*.jar
 
 # OS noise
 .DS_Store
